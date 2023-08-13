@@ -3,7 +3,10 @@ venv
 *.pyc
 *.pyd
 *.pyo
+.env
 .vscode
 .idea
+.replit
+.replit.backup
 Thumbs.db
 .DS_Store
