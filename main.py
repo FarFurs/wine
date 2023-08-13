@@ -5,6 +5,7 @@ import collections
 import openpyxl
 from pprint import pprint
 import argparse
+from datetime import datetime
 
 
 def get_corresponding_text(year) -> str:
@@ -17,11 +18,12 @@ def get_corresponding_text(year) -> str:
 
 
 def get_drinks(file_path) -> dict:
-    excel_data_wines = pandas.read_excel(file_path, 
-                                         sheet_name='Лист1', 
-                                         na_values=['N/A', 'NA'], 
+    excel_data_wines = pandas.read_excel(file_path,
+                                         sheet_name='Лист1',
+                                         na_values=['N/A', 'NA'],
                                          keep_default_na=False
                                         )
+
     drinks = collections.defaultdict(list)
     for wine in excel_data_wines.to_dict(orient='records'):
         drinks[wine['Категория']].append(wine)
@@ -29,9 +31,12 @@ def get_drinks(file_path) -> dict:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--file_path', help='Путь до excel файла', default='wine3.xlsx', type=str)
-    parser.add_argument('--winery_age', help='Возраст винодельни', default=100, type=int)
+    parser = argparse.ArgumentParser(description='Данные о напитках которые выпускает винодельня')
+    parser.add_argument('--file_path',
+                        help='Путь до excel файла',
+                        default='wine3.xlsx',
+                        type=str
+                        )
     args = parser.parse_args()
 
     env = Environment(
@@ -40,16 +45,16 @@ def main() -> None:
     )
     template = env.get_template('template.html')
 
+    year_of_foundation = 1927
     rendered_page = template.render(
-        winery_age = args.winery_age,
-        year = get_corresponding_text(args.winery_age),
-        drinks = get_drinks(args.file_path)
-    )
+        winery_age=datetime.now().year-year_of_foundation,
+        year=get_corresponding_text(datetime.now().year - year_of_foundation),
+        drinks=get_drinks(args.file_path)
+                                    )
 
     with open('index.html', 'w', encoding="utf8") as file:
         file.write(rendered_page)
-    get_corresponding_text(100)
-        
+
     server = HTTPServer(('0.0.0.0', 8000), SimpleHTTPRequestHandler)
     server.serve_forever()
 
