@@ -1,1 +1,0 @@
-9999999999{"name": "openpyxl", "version": "3.1.2", "summary": "A Python library to read/write Excel 2010 xlsx/xlsm files", "platform": null, "requires_dist": ["et-xmlfile"], "requires_python": ">=3.6", "files": [], "_cache_version": "1.0.0"}

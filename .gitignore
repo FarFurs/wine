@@ -6,6 +6,8 @@ venv
 *.pyc
 *.pyd
 *.pyo
+poetry.lock
+pyproject.toml
 .env
 .vscode
 .idea
