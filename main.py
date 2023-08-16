@@ -2,8 +2,6 @@ from http.server import HTTPServer, SimpleHTTPRequestHandler
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 import pandas
 import collections
-import openpyxl
-from pprint import pprint
 import argparse
 from datetime import datetime
 
@@ -22,8 +20,7 @@ def get_drinks(file_path) -> dict:
                                          sheet_name='Лист1',
                                          na_values=['N/A', 'NA'],
                                          keep_default_na=False
-                                        )
-
+                                         )
     drinks = collections.defaultdict(list)
     for wine in excel_data_wines.to_dict(orient='records'):
         drinks[wine['Категория']].append(wine)
@@ -46,10 +43,9 @@ def main() -> None:
     template = env.get_template('template.html')
 
     foundation_year = datetime.now().year - 1927
-    rendered_page = template.render(
-        winery_age=foundation_year,
-        year=get_corresponding_text(foundation_year),
-        drinks=get_drinks(args.file_path)
+    rendered_page = template.render(winery_age=foundation_year,
+                                    year=get_corresponding_text(foundation_year),
+                                    drinks=get_drinks(args.file_path)
                                     )
 
     with open('index.html', 'w', encoding="utf8") as file:
