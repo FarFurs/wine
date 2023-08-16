@@ -45,10 +45,10 @@ def main() -> None:
     )
     template = env.get_template('template.html')
 
-    year_of_foundation = 1927
+    foundation_year = datetime.now().year - 1927
     rendered_page = template.render(
-        winery_age=datetime.now().year-year_of_foundation,
-        year=get_corresponding_text(datetime.now().year - year_of_foundation),
+        winery_age=foundation_year,
+        year=get_corresponding_text(foundation_year),
         drinks=get_drinks(args.file_path)
                                     )
 
