@@ -34,7 +34,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description='Данные о напитках которые выпускает винодельня')
     parser.add_argument('--file_path',
                         help='Путь до excel файла',
-                        default='wine3.xlsx',
+                        default='wine.xlsx',
                         type=str
                         )
     args = parser.parse_args()
