@@ -6,6 +6,8 @@ import argparse
 from datetime import datetime
 
 
+_FOUNDATION_WINERY_DATE = 1906
+
 def get_corresponding_text(year) -> str:
     if year % 100 in (11, 12, 13, 14) or year % 10 in (0, 5, 6, 7, 8, 9):
         return 'лет'
@@ -42,9 +44,9 @@ def main() -> None:
     )
     template = env.get_template('template.html')
 
-    foundation_year = datetime.now().year - 1927
-    rendered_page = template.render(winery_age=foundation_year,
-                                    year=get_corresponding_text(foundation_year),
+    winery_age = datetime.now().year - _FOUNDATION_WINERY_DATE
+    rendered_page = template.render(winery_age=winery_age,
+                                    year=get_corresponding_text(winery_age),
                                     drinks=get_drinks(args.file_path)
                                     )
 
